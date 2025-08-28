@@ -1,0 +1,156 @@
+services:
+  #Nats Server port 8222
+  nats:
+    image: nats:2.9.21-alpine
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+  postgresdb:
+    container_name: docvisualDb
+    image: postgres:latest
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docvisualadmin
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=maindb 
+      - PGOPTIONS=-c checkpoint_timeout=15min -c max_wal_size=1GB -c shared_buffers=512MB
+
+ 
+  #Auth microservice
+  auth-ms:
+    depends_on:
+      - postgresdb
+      - nats
+    restart: always
+    build: ./auth-ms
+    volumes:
+      - ./auth-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      PORT: 3001
+      NATS_SERVERS: nats://nats:4222
+      DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD}@postgresdb:5432/maindb?schema=auth_shema
+      JWT_SECRET: ${JWT_SECRET}
+      
+  #datauser Microservice
+  user-ms:
+    depends_on:
+      - postgresdb
+      - nats
+    restart: always
+    build: ./user-ms
+    volumes:
+      - ./user-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      PORT: 3002
+      NATS_SERVERS: nats://nats:4222
+      DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD}@postgresdb:5432/maindb?schema=user_shema 
+      
+  partner-ms:
+    depends_on:
+      - postgresdb
+      - nats
+    restart: always
+    build: ./partner-ms
+    volumes:
+      - ./partner-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      PORT: 3003
+      NATS_SERVERS: nats://nats:4222
+      DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD}@postgresdb:5432/maindb?schema=partner_shema 
+      
+  emails-ms:
+    depends_on:
+      - postgresdb
+      - nats
+    restart: always
+    build: ./Emails-ms
+    volumes:
+      - ./Emails-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      PORT: 3004
+      JWT_SECRET: ${JWT_SECRET}
+      NATS_SERVERS: nats://nats:4222
+      PASSWORD_EMAIL: ${PASSWORD_EMAIL}   
+      EMAIL: ${EMAIL}
+      DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD}@postgresdb:5432/maindb?schema=email_shema 
+   
+  reservations-ms:
+    depends_on:
+      - postgresdb
+      - nats
+    restart: always
+    build: ./reservations-ms
+    volumes:
+      - ./reservations-ms/src:/usr/src/app/src
+    command: npm run start:dev
+    environment:
+      PORT: 3005
+      NATS_SERVERS: nats://nats:4222
+      DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD}@postgresdb:5432/maindb?schema=reservations_shema
+      JWT_SECRET: ${JWT_SECRET}
+
+  #gateway microservice
+  gateway:
+    depends_on:
+      - postgresdb
+      - nats
+    restart: always
+    build: ./gateway
+    ports:
+      - 3000:3000
+    volumes:
+      - ./gateway/src:/usr/src/app/src
+      - ./uploads:/usr/src/app/uploads  
+      - ./private:/usr/src/app/private/uploads
+    command: npm run start:dev
+    environment:
+      NATS_SERVERS: nats://nats:4222
+      PORT: 3000
+      UPLOAD_PATH: /usr/src/app/uploads 
+      UPLOAD_PRIVATE_PATH: /usr/src/app/private/uploads
+      
+  frontend:
+    restart: always
+    build: 
+      context: ./frontend
+      args:
+        VITE_GOOGLE_MAPS_API_KEY: AIzaSyC8nT7qj-zeSinnptAAHaqDrqnxitAOPAU
+        URL_FILES :  https://files.docvisual.co
+        VITE_SERVER: https://server.docvisual.co
+        BASE_URL: "/"
+    volumes:
+      - ./frontend/src:/usr/src/app/src
+    ports:
+      - "8080:80"
+    environment:
+      - VITE_GOOGLE_MAPS_API_KEY= "AIzaSyC8nT7qj-zeSinnptAAHaqDrqnxitAOPAU"
+      - VITE_BASE_URL="/"
+      - HOST=0.0.0.0
+      - CHOKIDAR_USEPOLLING=true
+     
+  #server nginx-proxy manager
+  nginx:
+    image: 'jc21/nginx-proxy-manager:2.11.2'   
+    restart: unless-stopped
+    ports:
+      - '80:80'        # HTTP
+      - '443:443'      # HTTPS
+      - '81:81'        # Panel de administración
+    environment:
+      DB_SQLITE_FILE: "/data/database.sqlite"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+      - ./uploads:/uploads 
+      
+volumes:
+  pgdata:

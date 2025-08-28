@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//.states specialists
+enum SpecialistStatus {
+  ACTIVE
+  DELETED
+}
+
+enum TypePayment {
+  CLINIC
+  prepaid
+}
+
+// Enums para sistema de pagos
+enum PaymentStatus {
+  PENDING
+  PAID
+  EXPIRED
+  CANCELLED
+}
+
+enum PlanType {
+  BASIC
+  PREMIUM
+  ENTERPRISE
+}
+
+//.data partner
+model UserDataPartner {
+  id              String            @id @unique
+  web             String?
+  facebook        String?
+  instagram       String?
+  linkedin        String?
+  youtube         String?
+  perfilPhoto     String?
+  title           String?
+  document        String?
+  phone           String?
+  photos          PhotosParnet[]
+  offices         OfficesParnet[]
+  actions         String[]
+  point           Float?            @default(0)
+  specialists     Specialist[]
+  prepagadas      Prepagadas[]
+  description     String?
+  name            String?
+  type_of_payment TypePayment?
+  services        ServicesPartner[]
+  experience      Int               @default(0)
+  
+  // Campos para sistema de pagos de especialistas
+  payment_status   PaymentStatus? // Estado del pago
+  plan_type        PlanType? // Tipo de plan
+  payment_date     DateTime? // Fecha de pago
+  expiration_date  DateTime? // Fecha de expiración
+  
+  // Relación con transacciones de pago
+  paymentTransactions PaymentTransaction[]
+}
+
+model OfficesParnet {
+  id              String           @id @default(uuid())
+  title           String
+  description     String
+  longitude       Float
+  latitude        Float
+  UserDataPartner UserDataPartner? @relation(fields: [UserDataId], references: [id])
+  UserDataId      String
+  departament     String
+  cityId          String
+  city            City             @relation(fields: [cityId], references: [id])
+}
+
+model City {
+  id      String          @id @default(uuid())
+  name    String          @unique()
+  offices OfficesParnet[]
+}
+
+//.photos
+model PhotosParnet {
+  id              String           @id @default(uuid())
+  url             String
+  UserDataPartner UserDataPartner? @relation(fields: [UserDataId], references: [id])
+  UserDataId      String?
+}
+
+//relation specialist
+model Specialist {
+  id     String            @id @default(uuid())
+  name   String            @unique()
+  status SpecialistStatus  @default(ACTIVE)
+  users  UserDataPartner[]
+}
+
+model Prepagadas {
+  id     String                @id @default(uuid())
+  name   String                @unique()
+  status SpecialistStatus      @default(ACTIVE)
+  users  UserDataPartner[]
+  type   typePaymentPrepagadas
+}
+
+enum typePaymentPrepagadas {
+  SITE
+  ANTICIPATED
+}
+
+enum ServiceName {
+  PRIMERA_CONSULTA
+  CONSULTA
+}
+
+model ServicesPartner {
+  id              String           @id @default(uuid())
+  name            String?
+  price           Float            @default(0)
+  status          SpecialistStatus @default(ACTIVE)
+  UserDataPartner UserDataPartner? @relation(fields: [UserDataId], references: [id])
+  UserDataId      String?
+  serviceName     serviceName?     @relation(fields: [serviceNameId], references: [id])
+  serviceNameId   String?
+}
+
+model serviceName {
+  id       String            @id @default(uuid())
+  name     ServiceName       @unique()
+  services ServicesPartner[]
+}
+
+// Nueva tabla para transacciones de pago
+model PaymentTransaction {
+  id              String        @id @default(uuid())
+  partnerId       String
+  amount          Float
+  currency        String        @default("COP")
+  transactionId   String        @unique
+  paymentMethod   String
+  status          PaymentStatus @default(PENDING)
+  planType        PlanType
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  expirationDate  DateTime
+  metadata        Json?         // Para almacenar datos adicionales del proveedor de pagos
+  
+  // Relación con partner
+  partner         UserDataPartner @relation(fields: [partnerId], references: [id])
+}

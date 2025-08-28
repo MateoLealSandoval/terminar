@@ -1,0 +1,41 @@
+# Construir la aplicación con Node.js
+FROM node:20-alpine AS build
+
+
+# Definir ARG para VITE_SERVER
+ARG VITE_SERVER
+ARG URL_FILES
+ARG VITE_GOOGLE_MAPS_API_KEY
+WORKDIR /usr/src/app
+
+# Copiar dependencias
+COPY package.json package-lock.json ./
+RUN npm install 
+
+# Copiar el resto del código
+COPY . .
+
+# Definir variable de entorno en la imagen final
+ENV VITE_SERVER=${VITE_SERVER}
+ENV URL_FILES=${URL_FILES}
+ENV BASE_URL = ${BASE_URL}
+ENV VITE_GOOGLE_MAPS_API_KEY = ${VITE_GOOGLE_MAPS_API_KEY}
+# Construir la aplicación con Vite
+RUN npm run build
+
+# -----------------------------
+# Imagen final con Nginx
+# -----------------------------
+FROM nginx:stable-alpine as production-stage
+
+# Copiar la aplicación construida
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+
+# Copiar configuración de Nginx
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+
+# Exponer el puerto 80
+EXPOSE 80
+
+# Iniciar Nginx
+CMD ["nginx", "-g", "daemon off;"]

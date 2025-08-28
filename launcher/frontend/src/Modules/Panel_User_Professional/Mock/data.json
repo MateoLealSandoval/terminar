@@ -1,0 +1,70 @@
+{
+    "notifications": [
+        {
+            "title": "Carlos González",
+            "text": "Recuerde su cita programada para el 28 de Febrero a las 2:00 p.m."
+        },
+        {
+            "title": "Emilse García",
+            "text": "Recuerde su cita programada para el 1 de Marzo a las 4:00 p.m."
+        }
+    ],
+    "reviews": [
+        {
+            "name": "Emilse García",
+            "date": "1 de febrero de 2025",
+            "location": "Altos del Bosque",
+            "text": "Muy buen servicio y amabilidad por parte del Doctor",
+            "scores": [
+                {
+                    "type": "¿Recomendarías a esta doctora?",
+                    "point": 5
+                },
+                {
+                    "type": "¿Recomendarías a esta doctora?",
+                    "point": 2
+                },
+                {
+                    "type": "Trato del personal en consulta",
+                    "point": 4
+                },
+                {
+                    "type": "Espera en consulta",
+                    "point": 4
+                },
+                {
+                    "type": "Estado de las instalaciones",
+                    "point": 5
+                }
+            ]
+        },
+        {
+            "name": "Carlos Gonzalez",
+            "date": "28 de enero de 2025",
+            "location": "Altos del Bosque",
+            "text": "Muy buen servicio y amabilidad por parte del Doctor",
+            "scores": [
+                {
+                    "type": "¿Recomendarías a esta doctora?",
+                    "point": 5
+                },
+                {
+                    "type": "¿Recomendarías a esta doctora?",
+                    "point": 2
+                },
+                {
+                    "type": "Trato del personal en consulta",
+                    "point": 3
+                },
+                {
+                    "type": "Espera en consulta",
+                    "point": 4
+                },
+                {
+                    "type": "Estado de las instalaciones",
+                    "point": 5
+                }
+            ]
+        }
+    ]
+}

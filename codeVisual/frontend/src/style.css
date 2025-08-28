@@ -1,0 +1,61 @@
+/* ========================================
+   ESTILOS PARA AJUSTES DOCVISUAL
+   ======================================== */
+
+/* Elementos destacados con sombra y outline */
+.highlighted-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  outline: 3px solid white;
+  outline-offset: -6px;
+}
+
+/* Espaciado igual arriba y abajo en títulos */
+.section-title {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/* Remover puntos después de títulos */
+.section-title::after {
+  content: '';
+}
+
+/* Tamaños iguales para logos partners */
+.partners-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.partners-logos img {
+  height: 3rem;
+  object-fit: contain;
+}
+
+/* Estilo para título Personalizado */
+.personalizado-title {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  color: var(--blue-1);
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .personalizado-title {
+    font-size: 1.875rem;
+  }
+}
+
+/* Animación para procesando */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

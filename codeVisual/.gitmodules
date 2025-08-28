@@ -1,0 +1,21 @@
+[submodule "auth-ms"]
+	path = auth-ms
+	url = https://github.com/Doc-visaual/auth-ms.git
+[submodule "gateway"]
+	path = gateway
+	url = https://github.com/Doc-visaual/gateway.git
+[submodule "user-ms"]
+	path = user-ms
+	url = https://github.com/Doc-visaual/user-ms.git
+[submodule "partner-ms"]
+	path = partner-ms
+	url = https://github.com/Doc-visaual/partner-ms.git
+[submodule "frontend"]
+	path = frontend
+	url = https://github.com/Doc-visaual/fronted.git
+[submodule "reservations-ms"]
+	path = reservations-ms
+	url = https://github.com/Doc-visaual/reservations-ms.git
+[submodule "Emails-ms"]
+	path = Emails-ms
+	url = https://github.com/Doc-visaual/Emails-ms.git

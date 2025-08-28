@@ -1,0 +1,36 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum NotificationState {
+  OPEN
+  CLOSE
+}
+
+model Email {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String            @id @default(uuid())
+  title     String?           @default("")
+  message   String?           @default("")
+  userId    String?
+  state     NotificationState @default(OPEN)
+  createdAt DateTime          @default(now())
+}
+
+model suscription {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

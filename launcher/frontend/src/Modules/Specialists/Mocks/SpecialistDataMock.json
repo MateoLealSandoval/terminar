@@ -1,0 +1,1483 @@
+[
+    {
+        "id": 5,
+        "name": "Silva Marcela Escobar",
+        "web": "www.example.com",
+        "social": {
+            "facebook": "www.facebook.com",
+            "instagram": "https://www.instagram.com",
+            "linkedin": "https://www.linkedin.com",
+            "youtube": "https://www.youtube.com/"
+        },
+        "typeconsultation": [
+            "Consulta con Medicina Prepagada",
+            "independiente"
+        ],
+        "title": "Oftalmologa",
+        "perfilPhoto": "https://res.cloudinary.com/dirsusbyy/image/upload/v1741311061/qxdmfetcpmt9lnfcypxe.jpg",
+        "expetience": 2,
+        "point": 4.5,
+        "services": [
+            "Examen visual y refracción",
+            "Manejo de ojo seco y superficie ocular",
+            "Oncología ocular"
+        ],
+        "description": "Doctora en Optometría y ciencias de la vision",
+        "specialist": [
+            "Optómetra"
+        ],
+        "locals": [
+            {
+                "name": "Clinica bogota 1",
+                "longitude": -76.0817,
+                "latitude": 5.6097,
+                "direction": "Carrera 7 #32-16, La Guajira, Colombia",
+                "departament": "La Guajira",
+                "phones": [
+                    "3045532155",
+                    "304452155"
+                ]
+            },
+            {
+                "name": "Clinica bogota 2",
+                "longitude": -72.0817,
+                "latitude": 8.6097,
+                "direction": "Carrera 6 #31-15, Bogotá, Colombia",
+                "departament": "Tolima",
+                "phones": [
+                    "3045532155",
+                    "304544155"
+                ]
+            }
+        ],
+        "servicesCost": [
+            {
+                "nameService": "Diagnóstico de precisión con tecnología de última generación: Pentacam",
+                "price": 100000
+            },
+            {
+                "nameService": "Biometría",
+                "price": 50000
+            },
+            {
+                "nameService": "Tomografía de Coherencia Óptica (OCT)",
+                "price": 120000
+            }
+        ],
+        "gallery": [
+            "https://res.cloudinary.com/dirsusbyy/image/upload/v1741311061/qxdmfetcpmt9lnfcypxe.jpg",
+            "https://previews.123rf.com/images/dezay/dezay1703/dezay170300029/74294429-ophthalmology-oculus-primer-plano-de-la-muestra-oftalmolog%C3%ADa-primer-plano-del-modelo-del-ojo-el.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl92veCBd8GWk5snPRykMNQ-qCLQ-ERDE_CpXrds5yOMPZCsTaIL30QkzixoS_A5rJlMc&usqp=CAU",
+            "https://www.aboutti.com/wp-content/uploads/2019/11/consulta-optometria.jpg",
+            "https://www.cedco.com.co/fotospages/min_thu_consulta_de_optometria_1697667767.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX0ig2bscN-7TQwhz7BY7HCEKcQbJNAsfBvg&s"
+        ],
+        "opinions": [
+            {
+                "user": "María González",
+                "fecha": "15 de febrero de 2025",
+                "lugar": "Clínica San Rafael",
+                "text": "Excelente atención, el doctor fue muy amable y profesional.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Carlos Ramírez",
+                "fecha": "20 de marzo de 2025",
+                "lugar": "Hospital Central",
+                "text": "Buen servicio, aunque la consulta empezó con un poco de retraso.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Ana Torres",
+                "fecha": "5 de abril de 2025",
+                "lugar": "Centro Médico Las Lomas",
+                "text": "Atención normal, pero esperaba un diagnóstico más detallado.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Pedro López",
+                "fecha": "10 de mayo de 2025",
+                "lugar": "Consultorio Privado",
+                "text": "No me sentí bien atendido, la explicación fue muy rápida.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Laura Fernández",
+                "fecha": "25 de junio de 2025",
+                "lugar": "Policlínico Los Robles",
+                "text": "Mala experiencia, no resolvieron mis dudas y me dejaron esperando mucho tiempo.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            }
+        ],
+        "schedule": {
+            "Monday": [
+                {
+                    "hour": 8,
+                    "minute": 0
+                },
+                {
+                    "hour": 14,
+                    "minute": 0
+                },
+                {
+                    "hour": 18,
+                    "minute": 30
+                }
+            ],
+            "Tuesday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 12,
+                    "minute": 0
+                },
+                {
+                    "hour": 17,
+                    "minute": 45
+                }
+            ],
+            "Wednesday": [
+                {
+                    "hour": 7,
+                    "minute": 30
+                },
+                {
+                    "hour": 13,
+                    "minute": 0
+                }
+            ],
+            "Thursday": [
+                {
+                    "hour": 10,
+                    "minute": 0
+                },
+                {
+                    "hour": 15,
+                    "minute": 30
+                }
+            ],
+            "Friday": [
+                {
+                    "hour": 8,
+                    "minute": 45
+                },
+                {
+                    "hour": 14,
+                    "minute": 15
+                },
+                {
+                    "hour": 19,
+                    "minute": 0
+                }
+            ],
+            "Saturday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ],
+            "Sunday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": 1,
+        "name": "Norma Contreras",
+        "web": "www.example.com",
+        "social": {
+            "facebook": "www.facebook.com",
+            "instagram": "https://www.instagram.com",
+            "linkedin": "https://www.linkedin.com",
+            "youtube": "https://www.youtube.com/"
+        },
+        "typeconsultation": [
+            "Consulta con Medicina Prepagada",
+            "independiente"
+        ],
+        "title": "Oftalmologa",
+        "perfilPhoto": "https://res.cloudinary.com/dirsusbyy/image/upload/v1740107868/abgx2rrq8lptrrrg5uda.jpg",
+        "expetience": 8,
+        "point": 4.7,
+        "services": [
+            "Examen visual y refracción",
+            "Adaptación de lentes de contacto",
+            "Terapia visual (Ortóptica)"
+        ],
+        "description": "Optometra con amplia experiencia en adaptación especializada de lentes de contacto para córneas irregulares, incluyendo queratocono, post-cirugía refractiva, trasplante de córnea y anillos intraestromales. Tratamientos de ortoqueratología y control de miopía.",
+        "specialist": [
+            "Optómetra",
+            "Lentes de Contacto",
+            "Terapia Visual (Ortóptica)"
+        ],
+        "locals": [
+            {
+                "name": "Clinica bogota 1",
+                "longitude": -76.0817,
+                "latitude": 5.6097,
+                "direction": "Carrera 7 #32-16, Bogotá, Colombia",
+                "departament": "Tolima",
+                "phones": [
+                    "3045532155",
+                    "304452155"
+                ]
+            },
+            {
+                "name": "Clinica bogota 2",
+                "longitude": -72.0817,
+                "latitude": 8.6097,
+                "direction": "Carrera 6 #31-15, Bogotá, Colombia",
+                "departament": "Tolima",
+                "phones": [
+                    "3045532155",
+                    "304544155"
+                ]
+            }
+        ],
+        "servicesCost": [
+            {
+                "nameService": "Diagnóstico de precisión con tecnología de última generación: Pentacam",
+                "price": 100000
+            },
+            {
+                "nameService": "Biometría",
+                "price": 50000
+            },
+            {
+                "nameService": "Tomografía de Coherencia Óptica (OCT)",
+                "price": 120000
+            }
+        ],
+        "gallery": [
+            "https://res.cloudinary.com/dirsusbyy/image/upload/v1740107868/abgx2rrq8lptrrrg5uda.jpg",
+            "https://previews.123rf.com/images/dezay/dezay1703/dezay170300029/74294429-ophthalmology-oculus-primer-plano-de-la-muestra-oftalmolog%C3%ADa-primer-plano-del-modelo-del-ojo-el.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl92veCBd8GWk5snPRykMNQ-qCLQ-ERDE_CpXrds5yOMPZCsTaIL30QkzixoS_A5rJlMc&usqp=CAU",
+            "https://www.aboutti.com/wp-content/uploads/2019/11/consulta-optometria.jpg",
+            "https://www.cedco.com.co/fotospages/min_thu_consulta_de_optometria_1697667767.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX0ig2bscN-7TQwhz7BY7HCEKcQbJNAsfBvg&s"
+        ],
+        "opinions": [
+            {
+                "user": "María González",
+                "fecha": "15 de febrero de 2025",
+                "lugar": "Clínica San Rafael",
+                "text": "Excelente atención, el doctor fue muy amable y profesional.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 2
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Carlos Ramírez",
+                "fecha": "20 de marzo de 2025",
+                "lugar": "Hospital Central",
+                "text": "Buen servicio, aunque la consulta empezó con un poco de retraso.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 5
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 3
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 4
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 2
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 5
+                    }
+                ]
+            },
+            {
+                "user": "Ana Torres",
+                "fecha": "5 de abril de 2025",
+                "lugar": "Centro Médico Las Lomas",
+                "text": "Atención normal, pero esperaba un diagnóstico más detallado.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 2
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 2
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Pedro López",
+                "fecha": "10 de mayo de 2025",
+                "lugar": "Consultorio Privado",
+                "text": "No me sentí bien atendido, la explicación fue muy rápida.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 2
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Laura Fernández",
+                "fecha": "25 de junio de 2025",
+                "lugar": "Policlínico Los Robles",
+                "text": "Mala experiencia, no resolvieron mis dudas y me dejaron esperando mucho tiempo.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 2
+                    },
+                    {
+                        "type": "WAITING",
+                        "score":2
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            }
+        ],
+        "schedule": {
+            "Monday": [
+                {
+                    "hour": 8,
+                    "minute": 0
+                },
+                {
+                    "hour": 14,
+                    "minute": 0
+                },
+                {
+                    "hour": 18,
+                    "minute": 30
+                }
+            ],
+            "Tuesday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 12,
+                    "minute": 0
+                },
+                {
+                    "hour": 17,
+                    "minute": 45
+                }
+            ],
+            "Wednesday": [
+                {
+                    "hour": 7,
+                    "minute": 30
+                },
+                {
+                    "hour": 13,
+                    "minute": 0
+                }
+            ],
+            "Thursday": [
+                {
+                    "hour": 10,
+                    "minute": 0
+                },
+                {
+                    "hour": 15,
+                    "minute": 30
+                }
+            ],
+            "Friday": [
+                {
+                    "hour": 8,
+                    "minute": 45
+                },
+                {
+                    "hour": 14,
+                    "minute": 15
+                },
+                {
+                    "hour": 19,
+                    "minute": 0
+                }
+            ],
+            "Saturday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ],
+            "Sunday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "name": "juan perez",
+        "web": "www.example.com",
+        "social": {
+            "facebook": "www.facebook.com",
+            "instagram": "https://www.instagram.com",
+            "linkedin": "https://www.linkedin.com",
+            "youtube": "https://www.youtube.com/"
+        },
+        "typeconsultation": [
+            "Consulta con Medicina Prepagada",
+            "independiente"
+        ],
+        "title": "Oftalmologa",
+        "perfilPhoto": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSghGQgm98OwnoGH-ucFDt9ZOTyNroT11_ZeA&s",
+        "expetience": 8,
+        "point": 4.7,
+        "services": [
+            "Examen visual y refracción",
+            "Adaptación de lentes de contacto",
+            "Terapia visual (Ortóptica)"
+        ],
+        "description": "Optometra con amplia experiencia en adaptación especializada de lentes de contacto para córneas irregulares, incluyendo queratocono, post-cirugía refractiva, trasplante de córnea y anillos intraestromales. Tratamientos de ortoqueratología y control de miopía.",
+        "specialist": [
+            "Optómetra",
+            "Lentes de Contacto",
+            "Terapia Visual (Ortóptica)"
+        ],
+        "locals": [
+            {
+                "name": "Clinica bogota 1",
+                "longitude": -76.0817,
+                "latitude": 5.6097,
+                "direction": "Carrera 7 #32-16, Bogotá, Colombia",
+                "departament": "Tolima",
+                "phones": [
+                    "3045532155",
+                    "304452155"
+                ]
+            },
+            {
+                "name": "Clinica bogota 2",
+                "longitude": -72.0817,
+                "latitude": 8.6097,
+                "direction": "Carrera 6 #31-15, Bogotá, Colombia",
+                "departament": "Tolima",
+                "phones": [
+                    "3045532155",
+                    "304544155"
+                ]
+            }
+        ],
+        "servicesCost": [
+            {
+                "nameService": "Diagnóstico de precisión con tecnología de última generación: Pentacam",
+                "price": 100000
+            },
+            {
+                "nameService": "Biometría",
+                "price": 50000
+            },
+            {
+                "nameService": "Tomografía de Coherencia Óptica (OCT)",
+                "price": 120000
+            }
+        ],
+        "gallery": [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSghGQgm98OwnoGH-ucFDt9ZOTyNroT11_ZeA&s",
+            "https://previews.123rf.com/images/dezay/dezay1703/dezay170300029/74294429-ophthalmology-oculus-primer-plano-de-la-muestra-oftalmolog%C3%ADa-primer-plano-del-modelo-del-ojo-el.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl92veCBd8GWk5snPRykMNQ-qCLQ-ERDE_CpXrds5yOMPZCsTaIL30QkzixoS_A5rJlMc&usqp=CAU",
+            "https://www.aboutti.com/wp-content/uploads/2019/11/consulta-optometria.jpg",
+            "https://www.cedco.com.co/fotospages/min_thu_consulta_de_optometria_1697667767.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX0ig2bscN-7TQwhz7BY7HCEKcQbJNAsfBvg&s"
+        ],
+        "opinions": [
+            {
+                "user": "María González",
+                "fecha": "15 de febrero de 2025",
+                "lugar": "Clínica San Rafael",
+                "text": "Excelente atención, el doctor fue muy amable y profesional.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Carlos Ramírez",
+                "fecha": "20 de marzo de 2025",
+                "lugar": "Hospital Central",
+                "text": "Buen servicio, aunque la consulta empezó con un poco de retraso.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Ana Torres",
+                "fecha": "5 de abril de 2025",
+                "lugar": "Centro Médico Las Lomas",
+                "text": "Atención normal, pero esperaba un diagnóstico más detallado.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Pedro López",
+                "fecha": "10 de mayo de 2025",
+                "lugar": "Consultorio Privado",
+                "text": "No me sentí bien atendido, la explicación fue muy rápida.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            }
+        ],
+        "schedule": {
+            "Monday": [
+                {
+                    "hour": 8,
+                    "minute": 0
+                },
+                {
+                    "hour": 14,
+                    "minute": 0
+                },
+                {
+                    "hour": 18,
+                    "minute": 30
+                }
+            ],
+            "Tuesday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 12,
+                    "minute": 0
+                },
+                {
+                    "hour": 17,
+                    "minute": 45
+                }
+            ],
+            "Wednesday": [
+                {
+                    "hour": 7,
+                    "minute": 30
+                },
+                {
+                    "hour": 13,
+                    "minute": 0
+                }
+            ],
+            "Thursday": [
+                {
+                    "hour": 10,
+                    "minute": 0
+                },
+                {
+                    "hour": 15,
+                    "minute": 30
+                }
+            ],
+            "Friday": [
+                {
+                    "hour": 8,
+                    "minute": 45
+                },
+                {
+                    "hour": 14,
+                    "minute": 15
+                },
+                {
+                    "hour": 19,
+                    "minute": 0
+                }
+            ],
+            "Saturday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ],
+            "Sunday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "name": "Pedro federico",
+        "web": "www.example.com",
+        "social": {
+            "facebook": "www.facebook.com",
+            "instagram": "https://www.instagram.com",
+            "linkedin": "https://www.linkedin.com",
+            "youtube": "https://www.youtube.com/"
+        },
+        "typeconsultation": [
+            "Consulta con Medicina Prepagada",
+            "independiente"
+        ],
+        "title": "Oftalmologa",
+        "perfilPhoto": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLGwtZt-Kb6lmJ9R4EgQs5wuKr-t8njXrdPg&s",
+        "expetience": 8,
+        "point": 4.7,
+        "services": [
+            "Examen visual y refracción",
+            "Adaptación de lentes de contacto",
+            "Terapia visual (Ortóptica)"
+        ],
+        "description": "Optometra con amplia experiencia en adaptación especializada de lentes de contacto para córneas irregulares, incluyendo queratocono, post-cirugía refractiva, trasplante de córnea y anillos intraestromales. Tratamientos de ortoqueratología y control de miopía.",
+        "specialist": [
+            "Optómetra",
+            "Lentes de Contacto",
+            "Terapia Visual (Ortóptica)"
+        ],
+        "locals": [
+            {
+                "name": "Clinica bogota 1",
+                "longitude": -76.0817,
+                "latitude": 5.6097,
+                "direction": "Carrera 7 #32-16, Bogotá, Colombia",
+                "departament": "Tolima",
+                "phones": [
+                    "3045532155",
+                    "304452155"
+                ]
+            },
+            {
+                "name": "Clinica bogota 2",
+                "longitude": -72.0817,
+                "latitude": 8.6097,
+                "direction": "Carrera 6 #31-15, Bogotá, Colombia",
+                "departament": "Tolima",
+                "phones": [
+                    "3045532155",
+                    "304544155"
+                ]
+            }
+        ],
+        "servicesCost": [
+            {
+                "nameService": "Diagnóstico de precisión con tecnología de última generación: Pentacam",
+                "price": 100000
+            },
+            {
+                "nameService": "Biometría",
+                "price": 50000
+            },
+            {
+                "nameService": "Tomografía de Coherencia Óptica (OCT)",
+                "price": 120000
+            }
+        ],
+        "gallery": [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLGwtZt-Kb6lmJ9R4EgQs5wuKr-t8njXrdPg&s",
+            "https://previews.123rf.com/images/dezay/dezay1703/dezay170300029/74294429-ophthalmology-oculus-primer-plano-de-la-muestra-oftalmolog%C3%ADa-primer-plano-del-modelo-del-ojo-el.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl92veCBd8GWk5snPRykMNQ-qCLQ-ERDE_CpXrds5yOMPZCsTaIL30QkzixoS_A5rJlMc&usqp=CAU",
+            "https://www.aboutti.com/wp-content/uploads/2019/11/consulta-optometria.jpg",
+            "https://www.cedco.com.co/fotospages/min_thu_consulta_de_optometria_1697667767.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX0ig2bscN-7TQwhz7BY7HCEKcQbJNAsfBvg&s"
+        ],
+        "opinions": [
+            {
+                "user": "María González",
+                "fecha": "15 de febrero de 2025",
+                "lugar": "Clínica San Rafael",
+                "text": "Excelente atención, el doctor fue muy amable y profesional.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Carlos Ramírez",
+                "fecha": "20 de marzo de 2025",
+                "lugar": "Hospital Central",
+                "text": "Buen servicio, aunque la consulta empezó con un poco de retraso.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Ana Torres",
+                "fecha": "5 de abril de 2025",
+                "lugar": "Centro Médico Las Lomas",
+                "text": "Atención normal, pero esperaba un diagnóstico más detallado.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Pedro López",
+                "fecha": "10 de mayo de 2025",
+                "lugar": "Consultorio Privado",
+                "text": "No me sentí bien atendido, la explicación fue muy rápida.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Laura Fernández",
+                "fecha": "25 de junio de 2025",
+                "lugar": "Policlínico Los Robles",
+                "text": "Mala experiencia, no resolvieron mis dudas y me dejaron esperando mucho tiempo.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            }
+        ],
+        "schedule": {
+            "Monday": [
+                {
+                    "hour": 8,
+                    "minute": 0
+                },
+                {
+                    "hour": 14,
+                    "minute": 0
+                },
+                {
+                    "hour": 18,
+                    "minute": 30
+                }
+            ],
+            "Tuesday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 12,
+                    "minute": 0
+                },
+                {
+                    "hour": 17,
+                    "minute": 45
+                }
+            ],
+            "Wednesday": [
+                {
+                    "hour": 7,
+                    "minute": 30
+                },
+                {
+                    "hour": 13,
+                    "minute": 0
+                }
+            ],
+            "Thursday": [
+                {
+                    "hour": 10,
+                    "minute": 0
+                },
+                {
+                    "hour": 15,
+                    "minute": 30
+                }
+            ],
+            "Friday": [
+                {
+                    "hour": 8,
+                    "minute": 45
+                },
+                {
+                    "hour": 14,
+                    "minute": 15
+                },
+                {
+                    "hour": 19,
+                    "minute": 0
+                }
+            ],
+            "Saturday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ],
+            "Sunday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": 4,
+        "name": "juan camilo",
+        "web": "www.example.com",
+        "social": {
+            "facebook": "www.facebook.com",
+            "instagram": "https://www.instagram.com",
+            "linkedin": "https://www.linkedin.com",
+            "youtube": "https://www.youtube.com/"
+        },
+        "typeconsultation": [
+            "Consulta con Medicina Prepagada",
+            "independiente"
+        ],
+        "title": "Oftalmologa",
+        "perfilPhoto": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ34TFfWiGCZmaf5laJwrtZx0Dtpefaa0i9gA&s",
+        "expetience": 2,
+        "point": 4.5,
+        "services": [
+            "Examen visual y refracción",
+            "Manejo de ojo seco y superficie ocular",
+            "Oncología ocular"
+        ],
+        "description": "Optometra con amplia experiencia en adaptación especializada de lentes de contacto para córneas irregulares, incluyendo queratocono, post-cirugía refractiva, trasplante de córnea y anillos intraestromales. Tratamientos de ortoqueratología y control de miopía.",
+        "specialist": [
+            "Oftalmología",
+            "Tratamiento de estrabismo",
+            "Rehabilitación en baja visión"
+        ],
+        "locals": [
+            {
+                "name": "Clinica bogota 1",
+                "longitude": -76.0817,
+                "latitude": 5.6097,
+                "direction": "Carrera 7 #32-16, La Guajira, Colombia",
+                "departament": "La Guajira",
+                "phones": [
+                    "3045532155",
+                    "304452155"
+                ]
+            },
+            {
+                "name": "Clinica bogota 2",
+                "longitude": -72.0817,
+                "latitude": 8.6097,
+                "direction": "Carrera 6 #31-15, Bogotá, Colombia",
+                "departament": "Tolima",
+                "phones": [
+                    "3045532155",
+                    "304544155"
+                ]
+            }
+        ],
+        "servicesCost": [
+            {
+                "nameService": "Diagnóstico de precisión con tecnología de última generación: Pentacam",
+                "price": 100000
+            },
+            {
+                "nameService": "Biometría",
+                "price": 50000
+            },
+            {
+                "nameService": "Tomografía de Coherencia Óptica (OCT)",
+                "price": 120000
+            }
+        ],
+        "gallery": [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ34TFfWiGCZmaf5laJwrtZx0Dtpefaa0i9gA&s",
+            "https://previews.123rf.com/images/dezay/dezay1703/dezay170300029/74294429-ophthalmology-oculus-primer-plano-de-la-muestra-oftalmolog%C3%ADa-primer-plano-del-modelo-del-ojo-el.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl92veCBd8GWk5snPRykMNQ-qCLQ-ERDE_CpXrds5yOMPZCsTaIL30QkzixoS_A5rJlMc&usqp=CAU",
+            "https://www.aboutti.com/wp-content/uploads/2019/11/consulta-optometria.jpg",
+            "https://www.cedco.com.co/fotospages/min_thu_consulta_de_optometria_1697667767.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX0ig2bscN-7TQwhz7BY7HCEKcQbJNAsfBvg&s"
+        ],
+        "opinions": [
+            {
+                "user": "María González",
+                "fecha": "15 de febrero de 2025",
+                "lugar": "Clínica San Rafael",
+                "text": "Excelente atención, el doctor fue muy amable y profesional.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Carlos Ramírez",
+                "fecha": "20 de marzo de 2025",
+                "lugar": "Hospital Central",
+                "text": "Buen servicio, aunque la consulta empezó con un poco de retraso.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Ana Torres",
+                "fecha": "5 de abril de 2025",
+                "lugar": "Centro Médico Las Lomas",
+                "text": "Atención normal, pero esperaba un diagnóstico más detallado.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Pedro López",
+                "fecha": "10 de mayo de 2025",
+                "lugar": "Consultorio Privado",
+                "text": "No me sentí bien atendido, la explicación fue muy rápida.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            },
+            {
+                "user": "Laura Fernández",
+                "fecha": "25 de junio de 2025",
+                "lugar": "Policlínico Los Robles",
+                "text": "Mala experiencia, no resolvieron mis dudas y me dejaron esperando mucho tiempo.",
+                "score": [
+                    {
+                        "type": "RECOMENDATION",
+                        "score": 4
+                    },
+                    {
+                        "type": "TREATMENT",
+                        "score": 5
+                    },
+                    {
+                        "type": "PERSONAL",
+                        "score": 3
+                    },
+                    {
+                        "type": "WAITING",
+                        "score": 4
+                    },
+                    {
+                        "type": "INTALATION",
+                        "score": 4
+                    }
+                ]
+            }
+        ],
+        "schedule": {
+            "Monday": [
+                {
+                    "hour": 8,
+                    "minute": 0
+                },
+                {
+                    "hour": 14,
+                    "minute": 0
+                },
+                {
+                    "hour": 18,
+                    "minute": 30
+                }
+            ],
+            "Tuesday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 12,
+                    "minute": 0
+                },
+                {
+                    "hour": 17,
+                    "minute": 45
+                }
+            ],
+            "Wednesday": [
+                {
+                    "hour": 7,
+                    "minute": 30
+                },
+                {
+                    "hour": 13,
+                    "minute": 0
+                }
+            ],
+            "Thursday": [
+                {
+                    "hour": 10,
+                    "minute": 0
+                },
+                {
+                    "hour": 15,
+                    "minute": 30
+                }
+            ],
+            "Friday": [
+                {
+                    "hour": 8,
+                    "minute": 45
+                },
+                {
+                    "hour": 14,
+                    "minute": 15
+                },
+                {
+                    "hour": 19,
+                    "minute": 0
+                }
+            ],
+            "Saturday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ],
+            "Sunday": [
+                {
+                    "hour": 9,
+                    "minute": 0
+                },
+                {
+                    "hour": 11,
+                    "minute": 0
+                }
+            ]
+        }
+    }
+   
+]

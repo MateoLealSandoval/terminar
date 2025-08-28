@@ -1,0 +1,5 @@
+export * from './Register-user.dto'
+export * from './login-user.dto'
+export * from './Register-partner.dto'
+export * from './set_status_partner.dto'
+export * from './set_status_user.dto'

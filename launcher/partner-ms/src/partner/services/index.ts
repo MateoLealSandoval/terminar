@@ -1,0 +1,5 @@
+export * from './partner.service'
+export * from './partner.specialist.service'
+export * from './partner.offices.service'
+export * from './partner.service.service'
+export * from './partner.prepagadas.service'

@@ -1,0 +1,7 @@
+/postgres
+/data
+/uploads
+/public
+/private
+.env
+.DS_Store

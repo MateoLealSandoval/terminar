@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//.states specialists
+enum SpecialistStatus {
+  ACTIVE
+  DELETED
+}
+
+enum TypePayment {
+  CLINIC
+  prepaid
+}
+
+//.data partner
+model UserDataPartner {
+  id              String            @id @unique
+  web             String?
+  facebook        String?
+  instagram       String?
+  linkedin        String?
+  youtube         String?
+  perfilPhoto     String?
+  title           String?
+  document        String?
+  phone           String?
+  photos          PhotosParnet[]
+  offices         OfficesParnet[]
+  actions         String[]
+  point           Float?            @default(0)
+  specialists     Specialist[]
+  prepagadas      Prepagadas[]
+  description     String?
+  name            String?
+  type_of_payment TypePayment?
+  services        ServicesPartner[]
+  experience      Int               @default(0)
+}
+
+model OfficesParnet {
+  id              String           @id @default(uuid())
+  title           String
+  description     String
+  longitude       Float
+  latitude        Float
+  UserDataPartner UserDataPartner? @relation(fields: [UserDataId], references: [id])
+  UserDataId      String
+  departament     String
+  cityId          String
+  city            City             @relation(fields: [cityId], references: [id])
+}
+
+model City {
+  id      String          @id @default(uuid())
+  name    String          @unique()
+  offices OfficesParnet[]
+}
+
+//.photos
+model PhotosParnet {
+  id              String           @id @default(uuid())
+  url             String
+  UserDataPartner UserDataPartner? @relation(fields: [UserDataId], references: [id])
+  UserDataId      String?
+}
+
+//relation specialist
+model Specialist {
+  id     String            @id @default(uuid())
+  name   String            @unique()
+  status SpecialistStatus  @default(ACTIVE)
+  users  UserDataPartner[]
+}
+
+model Prepagadas {
+  id     String                @id @default(uuid())
+  name   String                @unique()
+  status SpecialistStatus      @default(ACTIVE)
+  users  UserDataPartner[]
+  type   typePaymentPrepagadas
+}
+
+enum typePaymentPrepagadas {
+  SITE
+  ANTICIPATED
+}
+
+enum ServiceName {
+  PRIMERA_CONSULTA
+  CONSULTA
+}
+
+model ServicesPartner {
+  id              String           @id @default(uuid())
+  name            String?
+  price           Float            @default(0)
+  status          SpecialistStatus @default(ACTIVE)
+  UserDataPartner UserDataPartner? @relation(fields: [UserDataId], references: [id])
+  UserDataId      String?
+  serviceName     serviceName?     @relation(fields: [serviceNameId], references: [id])
+  serviceNameId   String?
+}
+
+ 
+
+model serviceName {
+  id       String            @id @default(uuid())
+  name     ServiceName       @unique()
+  services ServicesPartner[]
+}

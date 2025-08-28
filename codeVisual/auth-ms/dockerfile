@@ -1,0 +1,16 @@
+FROM node:21-alpine3.19
+
+WORKDIR /usr/src/app
+
+# Instala herramientas necesarias para compilar bcrypt (correcto)
+RUN apk add --no-cache openssl python3 make g++
+
+# Copia archivos de dependencias
+COPY package.json package-lock.json ./
+RUN npm install && npm rebuild bcrypt --build-from-source
+
+# Copia el resto del código
+COPY . .
+
+# Expone el puerto 3001
+EXPOSE 3001

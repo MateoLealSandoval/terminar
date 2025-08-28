@@ -1,0 +1,1 @@
+export * from './Create_specialist.dto'

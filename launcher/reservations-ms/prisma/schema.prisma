@@ -1,0 +1,64 @@
+ 
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum reservationStatus {
+  ACTIVE 
+  CANCELLED
+  PENDING
+  COMPLETED
+}
+
+
+model ScheduleData {
+  id       String        @id @default(uuid())
+  officeId String        @unique()
+  items    SheduleItem[]
+}
+
+model SheduleItem {
+  id         String       @id @default(uuid())
+  day        String
+  openTime   String
+  closeTime  String
+  scheduleId String // Clave foránea
+  active     Boolean      @default(true)
+  schedule   ScheduleData @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+}
+
+model Reservation {
+  id             String        @id @default(uuid())
+  officeId       String
+  scheduleId     String
+  date           DateTime
+  userId         String
+  profecionalId  String
+  price          Float
+  payment        String
+  status         reservationStatus       @default(ACTIVE)
+  calification   Calification? // relación 1:1 sin definir fields/references aquí
+  calificationId String? // clave foránea opcional
+}
+
+model Calification {
+  id                        String      @id @default(uuid())
+  recommends                Int?        @default(0)
+  service_specialist        Int?        @default(0)
+  recomendations_specialist Int?        @default(0)
+  personal_attention        Int?        @default(0)
+  quality                   Int?        @default(0)
+  time_service              Int?        @default(0)
+  time_waiting              Int?        @default(0)
+  site                      Int?        @default(0)
+  ubication_and_comfort     Int?        @default(0)
+  comments                  String?
+  reservation               Reservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  reservationId             String      @unique
+}

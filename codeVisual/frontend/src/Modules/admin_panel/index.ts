@@ -1,0 +1,5 @@
+export * from './Information_adminPanel.vue'
+export * from './itemInformation.vue'
+export * from './Admin_types_panels'
+export * from './Professionals_registers.vue'
+export * from './Professionals_registers.vue'

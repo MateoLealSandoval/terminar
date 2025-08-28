@@ -1,0 +1,26 @@
+import { Type } from "class-transformer";
+import { IsDateString, IsNumber, IsString } from "class-validator";
+
+export class create_reservation_dto {
+
+    @IsString()
+    officeId: string;
+    @IsString()
+    scheduleId: string;
+
+    @IsDateString()
+    date: string;
+
+    @IsString()
+    userId: string;
+
+    @IsString()
+    profecionalId: string;
+
+    @Type(() => Number)
+    @IsNumber()
+    price: number
+
+    @IsString()
+    payment:string
+}
