@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-
 import { EmailController } from './controllers/email.controller';
 import { EmailService } from './services/email.service.service';
 import { NatsModule } from './transport/nast.module';
