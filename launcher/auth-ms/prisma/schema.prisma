@@ -18,67 +18,40 @@ enum Role {
   PENDING_PARTNER
 }
 
-enum StatusPendingPartner {
-  PENDING
-  ACCEPTED
-  REJECTED
-}
-
-enum PlanType {
-  BASIC
-  STANDARD
-  PREMIUM
-}
-
-enum SubscriptionStatus {
-  ACTIVE
-  EXPIRED
-  SUSPENDED
-}
-
-// Modelo principal de usuarios para autenticación
 model User {
-  id           String        @id @default(uuid())
-  email        String        @unique
-  names        String
-  lastnames    String
-  password     String
-  role         Role?
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  subscription Subscription?
+  id        String @id @default(uuid())
+  email     String @unique
+  names     String
+  lastnames String
+  password  String
+  role      Role?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-// Modelo para especialistas pendientes de aprobación
-model PendingPartner {
-  id         String               @id @default(uuid())
-  email      String               @unique
-  names      String
-  title      String
-  phone      String
-  lastnames  String
-  document   String
-  password   String
-  createdAt  DateTime             @default(now())
-  updatedAt  DateTime             @updatedAt
-  status     StatusPendingPartner @default(PENDING)
-  side_front String
-  side_back  String
+model UserData {
+  id               String      @id
+  perfilPhoto      String?
+  birthDay         Int?
+  birthMonth       Int?
+  birthYear        Int?
+  contactEmail     String?
+  contactNames     String?
+  contactLastnames String?
+  contactPhone     String?
+  sex              String?
+  city             String?
+  familly          String?
+  cityuser         String?
+  country          String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
 }
 
-// Modelo de suscripciones para especialistas
-model Subscription {
-  id          String             @id @default(uuid())
-  userId      String             @unique
-  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  planType    PlanType
-  status      SubscriptionStatus @default(ACTIVE)
-  startDate   DateTime           @default(now())
-  endDate     DateTime
-  amount      Float
-  paymentId   String?            // ID del pago de ePayco
-  createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
-
-  @@map("subscriptions")
+model Favorites {
+  id           String @id @default(cuid())
+  userId       String
+  partnerId    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
