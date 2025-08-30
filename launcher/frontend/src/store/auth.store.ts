@@ -122,7 +122,7 @@ export const useAuthStore = defineStore('auth', {
         async userAuth(authdto: authdto) {
             try {
                 this.state = http_status.LOADING
-                const response = await axios.post('/auth/login', {
+                const response = await axios.post('/auth/register', {
                     email: authdto.email,
                     password: authdto.password
                 })

@@ -1,0 +1,144 @@
+import { Injectable, OnModuleInit, Inject } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { NATS_SERVICE } from 'src/config';
+
+interface JwtPayload {
+  id: string;
+  email: string;
+  names: string;
+  lastnames: string;
+  role: string;
+}
+
+@Injectable()
+export class AuthService extends PrismaClient implements OnModuleInit {
+  constructor(
+    private readonly jwtservice: JwtService,
+    @Inject(NATS_SERVICE) private readonly client: ClientProxy,
+  ) {
+    super();
+  }
+
+  onModuleInit() {
+    this.$connect();
+  }
+
+  async singJwt(payload: JwtPayload) {
+    return this.jwtservice.sign(payload);
+  }
+
+  async registerUser(registerUserDto: any) {
+    const { email, names, password, lastnames } = registerUserDto;
+    const existingUser = await this.user.findUnique({ where: { email } });
+    
+    if (existingUser) {
+      throw new RpcException({ statusCode: 400, message: 'El usuario ya existe' });
+    }
+
+    const newUser = await this.user.create({
+      data: { email, password: bcrypt.hashSync(password, 10), names, lastnames, role: 'USER' }
+    });
+
+    const { password: _, ...rest } = newUser;
+    const userForToken: JwtPayload = {
+      id: rest.id, email: rest.email, names: rest.names, lastnames: rest.lastnames, role: rest.role || 'USER'
+    };
+
+    return { user: rest, token: await this.singJwt(userForToken) };
+  }
+
+  async registerPartner(registerPartnerDto: any) {
+    const { email, names, password, lastnames } = registerPartnerDto;
+    const user = await this.user.findUnique({ where: { email } });
+    
+    if (user) {
+      throw new RpcException({ statusCode: 400, message: 'El usuario ya existe' });
+    }
+
+    const newUser = await this.user.create({
+      data: { email, password: bcrypt.hashSync(password, 10), names, lastnames, role: 'USER_PARTNER' }
+    });
+
+    const { password: _, ...rest } = newUser;
+    const userForToken: JwtPayload = {
+      id: rest.id, email: rest.email, names: rest.names, lastnames: rest.lastnames, role: rest.role || 'USER_PARTNER'
+    };
+
+    return { user: rest, token: await this.singJwt(userForToken) };
+  }
+
+  async CreateSuperAdmin(registerUserDto: any) {
+    const { email, names, password, lastnames } = registerUserDto;
+    const userAdmin = await this.user.findFirst({ where: { role: 'SUPER_ADMIN' } });
+    
+    if (userAdmin) {
+      throw new RpcException({ statusCode: 400, message: 'Solo puede existir un super admin' });
+    }
+
+    const user = await this.user.findUnique({ where: { email } });
+    if (user) {
+      throw new RpcException({ statusCode: 400, message: 'El usuario ya existe' });
+    }
+
+    const newUser = await this.user.create({
+      data: { email, password: bcrypt.hashSync(password, 10), names, lastnames, role: 'SUPER_ADMIN' }
+    });
+
+    const { password: _, ...rest } = newUser;
+    const userForToken: JwtPayload = {
+      id: rest.id, email: rest.email, names: rest.names, lastnames: rest.lastnames, role: rest.role || 'SUPER_ADMIN'
+    };
+
+    return { user: rest, token: await this.singJwt(userForToken) };
+  }
+
+  async LoginUser(loginUserDto: any) {
+    const { email, password } = loginUserDto;
+    const user = await this.user.findUnique({ where: { email } });
+
+    if (!user) {
+      throw new RpcException({ statusCode: 400, message: 'Usuario o contraseña no válida' });
+    }
+
+    const isPasswordValid = bcrypt.compareSync(password, user.password);
+    if (!isPasswordValid) {
+      throw new RpcException({ statusCode: 400, message: 'Correo o contraseña inválidos' });
+    }
+
+    const { password: _, ...rest } = user;
+    const userForToken: JwtPayload = {
+      id: rest.id, email: rest.email, names: rest.names, lastnames: rest.lastnames, role: rest.role || 'USER'
+    };
+
+    return { user: rest, token: await this.singJwt(userForToken) };
+  }
+
+  async verifyToken(token: string) {
+    const decoded = this.jwtservice.verify(token, {
+      secret: process.env.JWT_SECRET || 'EstoEsUnStringSeguroParaJWT2024'
+    });
+    return { user: decoded, token: await this.singJwt(decoded) };
+  }
+
+  async verifyUserEmail(email: string) {
+    const user = await this.user.findUnique({
+      where: { email },
+      select: { id: true, email: true, names: true, lastnames: true }
+    });
+    return { status: 200, data: !!user };
+  }
+
+  async get_data_basic_user(id: string) {
+    const user = await this.user.findFirst({
+      where: { id },
+      select: { names: true, lastnames: true, email: true }
+    });
+    if (!user) {
+      throw new RpcException({ statusCode: 401, message: 'No existe el usuario' });
+    }
+    return { status: 200, data: user };
+  }
+}

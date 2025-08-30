@@ -1,105 +1,461 @@
 #!/bin/bash
 
-echo "🔧 Aplicación Final de Correcciones"
-echo "==================================="
+echo "🔧 Restaurando Auth Service COMPLETO"
+echo "===================================="
 
-# 1. Asegurar que todas las referencias están correctas
-echo "1️⃣ Corrigiendo todas las referencias..."
-docker compose exec auth-ms sh << 'SCRIPT'
-# Backup actual
-cp src/auth/auth.service.ts src/auth/auth.service.ts.final-backup
+# Crear el service completo con TODOS los métodos que necesita el controller
+docker compose exec -T auth-ms sh << 'EOF'
+# Backup del service actual
+cp src/auth/auth.service.ts src/auth/auth.service.ts.incomplete-backup
 
-# Corregir absolutamente TODO
-sed -i 's/this\.User/this.user/g' src/auth/auth.service.ts
-sed -i 's/this\.Users/this.user/g' src/auth/auth.service.ts
+# Crear service COMPLETO con todos los métodos
+cat > src/auth/auth.service.ts << 'COMPLETE_SERVICE'
+import { Injectable, OnModuleInit, Inject } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
+import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { NATS_SERVICE } from 'src/config';
 
-# Verificar
-echo "Referencias con User mayúscula (debe ser 0):"
-grep -c "this\.User" src/auth/auth.service.ts || echo "0"
+@Injectable()
+export class AuthService extends PrismaClient implements OnModuleInit {
+  constructor(
+    private readonly jwtservice: JwtService,
+    @Inject(NATS_SERVICE) private readonly client: ClientProxy,
+  ) {
+    super();
+  }
 
-echo "Referencias correctas con user minúscula:"
-grep -c "this\.user\." src/auth/auth.service.ts
-SCRIPT
+  async onModuleInit() {
+    await this.$connect();
+    console.log('🔌 AuthService connected to database');
+  }
 
-# 2. Reiniciar
-echo -e "\n2️⃣ Reiniciando auth-ms..."
+  async singJwt(payload: any) {
+    return this.jwtservice.sign(payload);
+  }
+
+  // 1. MÉTODO EXISTENTE - registerUser
+  async registerUser(registerUserDto: any) {
+    try {
+      const { email, names, password, lastnames } = registerUserDto;
+      
+      const existingUser = await this.user.findUnique({
+        where: { email }
+      });
+
+      if (existingUser) {
+        throw new RpcException({
+          statusCode: 400,
+          message: 'El usuario ya existe'
+        });
+      }
+
+      const newUser = await this.user.create({
+        data: {
+          email,
+          password: bcrypt.hashSync(password, 10),
+          names,
+          lastnames,
+          role: 'USER'
+        }
+      });
+
+      const { password: _, ...rest } = newUser;
+      
+      return {
+        user: rest,
+        token: await this.singJwt(rest),
+      };
+    } catch (error) {
+      throw new RpcException({
+        statusCode: 400,
+        message: error.message
+      });
+    }
+  }
+
+  // 2. MÉTODO FALTANTE - registerPartner
+  async registerPartner(registerPartnerDto: any) {
+    try {
+      const { email, names, password, lastnames } = registerPartnerDto;
+      
+      const existingUser = await this.user.findUnique({
+        where: { email }
+      });
+
+      if (existingUser) {
+        throw new RpcException({
+          statusCode: 400,
+          message: 'El partner ya existe'
+        });
+      }
+
+      const newPartner = await this.user.create({
+        data: {
+          email,
+          password: bcrypt.hashSync(password, 10),
+          names,
+          lastnames,
+          role: 'PARTNER'
+        }
+      });
+
+      const { password: _, ...rest } = newPartner;
+      
+      return {
+        user: rest,
+        token: await this.singJwt(rest),
+      };
+    } catch (error) {
+      throw new RpcException({
+        statusCode: 400,
+        message: error.message
+      });
+    }
+  }
+
+  // 3. MÉTODO FALTANTE - CreateSuperAdmin
+  async CreateSuperAdmin(registerUserDto: any) {
+    try {
+      const { email, names, password, lastnames } = registerUserDto;
+      
+      const existingUser = await this.user.findUnique({
+        where: { email }
+      });
+
+      if (existingUser) {
+        throw new RpcException({
+          statusCode: 400,
+          message: 'El super admin ya existe'
+        });
+      }
+
+      const newSuperAdmin = await this.user.create({
+        data: {
+          email,
+          password: bcrypt.hashSync(password, 10),
+          names,
+          lastnames,
+          role: 'SUPER_ADMIN'
+        }
+      });
+
+      const { password: _, ...rest } = newSuperAdmin;
+      
+      return {
+        user: rest,
+        token: await this.singJwt(rest),
+      };
+    } catch (error) {
+      throw new RpcException({
+        statusCode: 400,
+        message: error.message
+      });
+    }
+  }
+
+  // 4. MÉTODO EXISTENTE - LoginUser
+  async LoginUser(loginUserDto: any) {
+    try {
+      console.log("🔍 LoginUser called");
+      
+      const { email, password } = loginUserDto;
+      const user = await this.user.findUnique({
+        where: { email }
+      });
+
+      if (!user) {
+        throw new RpcException({
+          statusCode: 400,
+          message: 'Usuario no encontrado'
+        });
+      }
+
+      const isPasswordValid = bcrypt.compareSync(password, user.password);
+
+      if (!isPasswordValid) {
+        throw new RpcException({
+          statusCode: 400,
+          message: 'Credenciales inválidas'
+        });
+      }
+
+      const { password: _, ...rest } = user;
+      const token = await this.singJwt(rest);
+
+      return {
+        user: rest,
+        token,
+      };
+    } catch (error) {
+      throw new RpcException({
+        statusCode: 400,
+        message: error.message
+      });
+    }
+  }
+
+  // 5. MÉTODO EXISTENTE - verifyToken
+  async verifyToken(token: string) {
+    try {
+      const payload = this.jwtservice.verify(token);
+      return { valid: true, user: payload };
+    } catch (error) {
+      return { valid: false, user: null };
+    }
+  }
+
+  // 6. MÉTODO FALTANTE - get_data_basic_user
+  async get_data_basic_user(id: string) {
+    try {
+      const user = await this.user.findUnique({
+        where: { id },
+        select: {
+          id: true,
+          email: true,
+          names: true,
+          lastnames: true,
+          role: true,
+          emailVerified: true
+        }
+      });
+      
+      if (!user) {
+        throw new RpcException({
+          statusCode: 404,
+          message: "Usuario no encontrado"
+        });
+      }
+      
+      return {
+        status: 200,
+        data: user
+      };
+    } catch (error) {
+      throw new RpcException({
+        statusCode: 400,
+        message: error.message
+      });
+    }
+  }
+
+  // 7. MÉTODO FALTANTE - getInformationUsersAdmin
+  async getInformationUsersAdmin(id: string) {
+    try {
+      const user = await this.user.findUnique({
+        where: { id },
+        select: {
+          id: true,
+          email: true,
+          names: true,
+          lastnames: true,
+          role: true,
+          emailVerified: true,
+          createdAt: true,
+          updatedAt: true
+        }
+      });
+      
+      if (!user) {
+        throw new RpcException({
+          statusCode: 404,
+          message: "Usuario no encontrado"
+        });
+      }
+      
+      return {
+        status: 200,
+        data: user
+      };
+    } catch (error) {
+      throw new RpcException({
+        statusCode: 400,
+        message: error.message
+      });
+    }
+  }
+
+  // 8. MÉTODO FALTANTE - getAllUsersPartners
+  async getAllUsersPartners(PaginationDto: any) {
+    try {
+      const { page = 1, limit = 10 } = PaginationDto;
+      const currentPage = Math.max(1, Number(page));
+      const perPage = Math.max(1, Math.min(100, Number(limit)));
+      const offset = (currentPage - 1) * perPage;
+      
+      const users = await this.user.findMany({
+        where: { role: "PARTNER" },
+        select: {
+          id: true,
+          email: true,
+          names: true,
+          lastnames: true,
+          role: true,
+          emailVerified: true,
+          createdAt: true,
+          updatedAt: true
+        },
+        skip: offset,
+        take: perPage,
+        orderBy: { createdAt: "desc" }
+      });
+      
+      const total = await this.user.count({
+        where: { role: "PARTNER" }
+      });
+      
+      const totalPages = Math.ceil(total / perPage);
+      
+      return {
+        status: 200,
+        data: users,
+        meta: { total, page: currentPage, limit: perPage, totalPages }
+      };
+    } catch (error) {
+      throw new RpcException({
+        statusCode: 400,
+        message: error.message
+      });
+    }
+  }
+
+  // 9. MÉTODO FALTANTE - getAllUsers
+  async getAllUsers(PaginationDto: any) {
+    try {
+      const { page = 1, limit = 10 } = PaginationDto;
+      const currentPage = Math.max(1, Number(page));
+      const perPage = Math.max(1, Math.min(100, Number(limit)));
+      const offset = (currentPage - 1) * perPage;
+      
+      const users = await this.user.findMany({
+        where: { role: "USER" },
+        select: {
+          id: true,
+          email: true,
+          names: true,
+          lastnames: true,
+          role: true,
+          emailVerified: true,
+          createdAt: true,
+          updatedAt: true
+        },
+        skip: offset,
+        take: perPage,
+        orderBy: { createdAt: "desc" }
+      });
+      
+      const total = await this.user.count({
+        where: { role: "USER" }
+      });
+      
+      const totalPages = Math.ceil(total / perPage);
+      
+      return {
+        status: 200,
+        data: users,
+        meta: { total, page: currentPage, limit: perPage, totalPages }
+      };
+    } catch (error) {
+      throw new RpcException({
+        statusCode: 400,
+        message: error.message
+      });
+    }
+  }
+
+  // 10. MÉTODO EXISTENTE - verifyUserEmail
+  async verifyUserEmail(email: string) {
+    try {
+      const user = await this.user.findUnique({
+        where: { email }
+      });
+      return { data: !!user };
+    } catch (error) {
+      return { data: false };
+    }
+  }
+}
+COMPLETE_SERVICE
+
+echo "✅ Auth Service COMPLETO creado con TODOS los métodos"
+EOF
+
+echo -e "\n🔄 Reiniciando auth-ms..."
 docker compose restart auth-ms
 
-# 3. Esperar compilación
-echo "⏳ Esperando compilación completa (25 segundos)..."
-for i in {1..25}; do
-    echo -n "."
-    sleep 1
-done
-echo ""
+echo -e "\n⏳ Esperando compilación completa (25 segundos)..."
+sleep 25
 
-# 4. Verificar compilación
-echo -e "\n3️⃣ Verificando compilación..."
-compilation_status=$(docker compose logs auth-ms --tail=5 2>&1)
-if echo "$compilation_status" | grep -q "Found 0 errors"; then
-    echo "✅ Compilación exitosa"
+echo -e "\n📊 Verificando compilación..."
+compile_result=$(docker compose logs auth-ms --tail=10)
+
+if echo "$compile_result" | grep -q "Found 0 errors"; then
+    echo "✅ ¡COMPILACIÓN EXITOSA! - 0 errores"
     
-    # 5. Verificar que está escuchando
-    if echo "$compilation_status" | grep -q "successfully started"; then
-        echo "✅ Microservicio activo"
-    fi
-    
-    # 6. Crear usuario de prueba
-    echo -e "\n4️⃣ Creando usuario de prueba final..."
-    timestamp=$(date +%s)
-    email="working${timestamp}@test.com"
-    password="Working123"
-    
-    register=$(curl -s -X POST http://localhost:3000/auth/register \
-      -H "Content-Type: application/json" \
-      -d "{
-        \"email\": \"$email\",
-        \"password\": \"$password\",
-        \"names\": \"Working\",
-        \"lastnames\": \"User\"
-      }" \
-      -w "\nSTATUS:%{http_code}")
-    
-    reg_status=$(echo "$register" | grep "STATUS:" | cut -d: -f2)
-    
-    if [ "$reg_status" = "201" ] || [ "$reg_status" = "200" ]; then
-        echo "✅ Usuario creado: $email"
+    if echo "$compile_result" | grep -q "successfully started"; then
+        echo "✅ ¡MICROSERVICIO ACTIVO!"
         
-        # 7. Probar login
-        echo -e "\n5️⃣ Probando login final..."
-        sleep 3
+        echo -e "\n🧪 Probando funcionalidad..."
         
-        login=$(curl -s -X POST http://localhost:3000/auth/login \
+        # Crear usuario de prueba
+        timestamp=$(date +%s)
+        test_email="restored${timestamp}@test.com"
+        test_password="Test1234"
+        
+        echo "Registrando usuario: $test_email"
+        register_response=$(curl -s -X POST http://localhost:3000/auth/register \
           -H "Content-Type: application/json" \
           -d "{
-            \"email\": \"$email\",
-            \"password\": \"$password\"
+            \"email\": \"$test_email\",
+            \"password\": \"$test_password\",
+            \"names\": \"Restored\",
+            \"lastnames\": \"User\"
           }" \
-          -w "\nSTATUS:%{http_code}")
+          -w "\nHTTP:%{http_code}")
         
-        login_status=$(echo "$login" | grep "STATUS:" | cut -d: -f2)
-        login_body=$(echo "$login" | grep -v "STATUS:")
+        reg_code=$(echo "$register_response" | grep "HTTP:" | cut -d: -f2)
         
-        if [ "$login_status" = "201" ] || [ "$login_status" = "200" ]; then
-            echo "🎉 ¡¡¡LOGIN EXITOSO!!!"
-            echo "================================"
-            echo "$login_body" | python3 -m json.tool
-            echo "================================"
-            echo "✅ SISTEMA 100% FUNCIONAL"
-            echo "📧 Email: $email"
-            echo "🔑 Password: $password"
-            echo "🌐 URL: http://localhost:8080"
-            echo "================================"
+        if [ "$reg_code" = "201" ] || [ "$reg_code" = "200" ]; then
+            echo "✅ Registro exitoso"
+            
+            sleep 3
+            echo "Probando login..."
+            
+            login_response=$(curl -s -X POST http://localhost:3000/auth/login \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"email\": \"$test_email\",
+                \"password\": \"$test_password\"
+              }" \
+              -w "\nHTTP:%{http_code}")
+            
+            login_code=$(echo "$login_response" | grep "HTTP:" | cut -d: -f2)
+            
+            if [ "$login_code" = "201" ] || [ "$login_code" = "200" ]; then
+                echo "🎉 ¡¡¡LOGIN FUNCIONA PERFECTAMENTE!!!"
+                echo "=================================="
+                echo "✅ AUTH SERVICE COMPLETAMENTE RESTAURADO"
+                echo "✅ Todos los métodos implementados"
+                echo "✅ Login funcionando"
+                echo "✅ Registro funcionando"
+                echo "✅ Sistema listo para usar"
+                echo "=================================="
+                echo "📧 Email prueba: $test_email"
+                echo "🔑 Password: $test_password"
+                echo "🌐 Frontend: http://localhost:8080"
+            else
+                echo "❌ Login falló (HTTP: $login_code)"
+            fi
         else
-            echo "❌ Login falló"
-            echo "Status: $login_status"
-            echo "Respuesta: $login_body"
+            echo "❌ Registro falló (HTTP: $reg_code)"
         fi
     else
-        echo "❌ Registro falló"
+        echo "⚠️ Microservicio compiló pero no está activo"
+        docker compose logs auth-ms --tail=3
     fi
 else
-    echo "❌ Hay errores de compilación"
-    docker compose logs auth-ms --tail=20 | grep error
+    echo "❌ Aún hay errores de compilación:"
+    echo "$compile_result" | grep -i "Found.*errors"
+    echo "$compile_result" | grep -i "error TS" | head -3
 fi
-

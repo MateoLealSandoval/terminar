@@ -158,30 +158,43 @@ const goToTerms = () => {
         
         <!-- SECCIÓN PERSONALIZADO -->
         <div class="w-[90%] mx-auto pb-12">
-            <h1 class="text-center mt-10 text-2xl lg:text-3xl font-bold text-[var(--blue-1)]">Personalizado</h1>
-            <h1 class="w-full text-center mt-4">
-                Si alguno de los paquetes no es lo que estás buscando y necesitas algo más personalizado,
-                CONTÁCTANOS al
-                <span>
-                    <a href="https://wa.me/573124967421" target="_blank" rel="noopener noreferrer"
-                        class="text-[var(--blue-3)] hover:underline">
-                        312 4967421
-                    </a>
-                </span>
-            </h1>
+            <h1 class="mt-10 text-2xl lg:text-3xl font-bold text-[var(--blue-1)] text-center">Personalizado</h1>
             
-            <h1 class="text-center mt-2">
-                y una persona del equipo se pondrá en contacto contigo para
-                poder orientarte y ofrecerte una solución a la medida.
-            </h1>
-            
-            <div class="origin-center mt-10 text-[var(--blue-1)]">
-                <h1 class="w-full text-center">Contrato mínimo 3 meses para lograr resultados.</h1>
+            <div class="w-full text-center mt-4 space-y-2">
+                <p class="text-gray-700">
+                    Si alguno de los paquetes no es lo que estás buscando y necesitas algo más personalizado,
+                </p>
+                <p class="text-gray-700">
+                    CONTÁCTANOS al
+                    <span>
+                        <a href="https://wa.me/573124967421" target="_blank" rel="noopener noreferrer"
+                            class="text-[var(--blue-1)] hover:underline font-semibold">
+                            312 4967421
+                        </a>
+                    </span>
+                    y una persona del equipo se pondrá en contacto contigo para
+                </p>
+                <p class="text-gray-700">
+                    poder orientarte y ofrecerte una solución a la medida.
+                </p>
             </div>
             
-            <h1 class="w-full text-center mt-10 text-[var(--blue-1)] cursor-pointer hover:underline" @click="goToTerms">
-                Consulta las condiciones de los planes DOCVISUAL
-            </h1>
+            <div class="mt-8 text-center">
+                <p class="text-[var(--blue-1)] text-sm font-medium">
+                    Consulta las condiciones de los planes DOCVISUAL.
+                </p>
+                <p class="text-[var(--blue-1)] text-sm font-medium mt-1">
+                    Contrato mínimo 3 meses para lograr resultados.
+                </p>
+            </div>
+            
+            <!-- Logo ICÓNICA Partner -->
+            <div class="w-full flex justify-center mt-10">
+                <div class="flex items-center space-x-3">
+                    <span class="text-gray-600 font-medium text-lg">Partner</span>
+                    <img class="h-12 w-auto object-contain" src="@/assets/images/IconicaPartner.webp" alt="ICÓNICA" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
