@@ -24,15 +24,32 @@ enum StatusPendingPartner {
   REJECTED
 }
 
-model User {
-  id        String @id @default(uuid())
-  email     String @unique
-  names     String
-  lastnames String
-  password  String
-  role      Role?
+enum PlanType {
+  BASIC
+  STANDARD
+  PREMIUM
 }
 
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  SUSPENDED
+}
+
+// Modelo principal de usuarios para autenticación
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  names        String
+  lastnames    String
+  password     String
+  role         Role?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  subscription Subscription?
+}
+
+// Modelo para especialistas pendientes de aprobación
 model PendingPartner {
   id         String               @id @default(uuid())
   email      String               @unique
@@ -49,27 +66,17 @@ model PendingPartner {
   side_back  String
 }
 
-enum PlanType {
-  BASIC
-  STANDARD
-  PREMIUM
-}
-
-enum SubscriptionStatus {
-  ACTIVE
-  EXPIRED
-  SUSPENDED
-}
-
+// Modelo de suscripciones para especialistas
 model Subscription {
   id          String             @id @default(uuid())
   userId      String             @unique
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   planType    PlanType
   status      SubscriptionStatus @default(ACTIVE)
   startDate   DateTime           @default(now())
   endDate     DateTime
   amount      Float
-  paymentId   String?
+  paymentId   String?            // ID del pago de ePayco
   createdAt   DateTime           @default(now())
   updatedAt   DateTime           @updatedAt
 
