@@ -1,17 +1,19 @@
-import { Controller, Post, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { ReminderCronService } from '../cron/reminder-cron.service';
 
-@Controller('reminders')
+@Controller()
 export class ReminderController {
   constructor(private readonly reminderCronService: ReminderCronService) {}
 
-  @Post('send-daily')
+  @MessagePattern('emails-ms.send.daily.reminders')
   async sendDailyReminders() {
     try {
-      await this.reminderCronService.sendRemindersManually();
+      const result = await this.reminderCronService.sendRemindersManually();
       return {
         status: 200,
         message: 'Recordatorios enviados exitosamente',
+        data: result,
       };
     } catch (error) {
       return {
@@ -22,32 +24,13 @@ export class ReminderController {
     }
   }
 
-  @Get('status')
+  @MessagePattern('emails-ms.reminder.status')
   async getStatus() {
     return {
       status: 200,
       message: 'Sistema de recordatorios activo',
       timezone: 'America/Bogota',
       schedule: '09:00 AM diario',
-      next_execution: 'Mañana a las 09:00 AM',
     };
-  }
-
-  @Get('test-connection')
-  async testConnection() {
-    try {
-      // Test simple para verificar que todo funciona
-      return {
-        status: 200,
-        message: 'Conexión exitosa',
-        timestamp: new Date().toISOString(),
-      };
-    } catch (error) {
-      return {
-        status: 500,
-        message: 'Error de conexión',
-        error: error.message,
-      };
-    }
   }
 }
