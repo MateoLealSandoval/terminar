@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Inject } from '@nestjs/common';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
-import { catchError, firstValueFrom, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { NATS_SERVICE } from 'src/config';
 
 @Controller('reminders')
@@ -9,22 +9,28 @@ export class RemindersController {
 
   @Post('send-daily')
   async sendDailyReminders() {
-    try {
-      return await firstValueFrom(
-        this.client.send('get.appointments.for.tomorrow', {})
-      );
-    } catch (error) {
-      throw new RpcException(error);
-    }
+    return this.client.send('emails.reminders.send-daily', {}).pipe(
+      catchError(error => {
+        return throwError(() => new RpcException(error));
+      })
+    );
   }
 
   @Get('status')
-  async getStatus() {
-    return {
-      status: 200,
-      message: 'Sistema de recordatorios movido a reservations-ms',
-      timezone: 'America/Bogota',
-      schedule: '09:00 AM diario'
-    };
+  async getRemindersStatus() {
+    return this.client.send('emails.reminders.status', {}).pipe(
+      catchError(error => {
+        return throwError(() => new RpcException(error));
+      })
+    );
+  }
+
+  @Get('test-connection')
+  async testConnection() {
+    return this.client.send('emails.reminders.test-connection', {}).pipe(
+      catchError(error => {
+        return throwError(() => new RpcException(error));
+      })
+    );
   }
 }

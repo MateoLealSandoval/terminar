@@ -6,7 +6,12 @@ import { SupcriptionsController } from './supcription.controller';
 import { RemindersController } from './reminders.controller';
 
 @Module({
-  controllers: [EmailsController, NotificationsController, SupcriptionsController, RemindersController],
+  controllers: [
+    EmailsController,
+    NotificationsController,
+    SupcriptionsController,
+    RemindersController
+  ],
   imports: [NatsModule]
 })
 export class EmailsModule {}
