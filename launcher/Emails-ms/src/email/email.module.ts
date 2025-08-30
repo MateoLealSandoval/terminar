@@ -7,6 +7,7 @@ import { EmailControllerRegister } from './controllers/email.register.controller
 import { NotificationsController } from './controllers/notifications.controller';
 import { SupcriptionController } from './controllers/supcription.controller';
 import { SupcritionService } from './services/supcription.service';
+import { ReminderCronService } from '../cron/reminder-cron.service'; // AGREGAR
 
 @Module({
   imports: [NatsModule],
@@ -16,7 +17,12 @@ import { SupcritionService } from './services/supcription.service';
     NotificationsController,
     SupcriptionController,
   ],
-  providers: [EmailService, EmailServiceRegister, SupcritionService],
-  exports: [EmailService],
+  providers: [
+    EmailService,
+    EmailServiceRegister,
+    SupcritionService,
+    ReminderCronService,
+  ],
+  exports: [EmailService, ReminderCronService], // EXPORTAR ReminderCronService
 })
 export class EmailModule {}

@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ScheduleModule } from '@nestjs/schedule';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { EmailModule } from './email/email.module';
 import { envs, NATS_SERVICE } from './config';
+import { ReminderController } from './reminder/reminder.controller';
 
 @Module({
   imports: [
@@ -15,6 +17,9 @@ import { envs, NATS_SERVICE } from './config';
       },
     ]),
     EmailModule,
+    ScheduleModule.forRoot(),
   ],
+  controllers: [ReminderController],
+  providers: [],
 })
 export class AppModule {}
