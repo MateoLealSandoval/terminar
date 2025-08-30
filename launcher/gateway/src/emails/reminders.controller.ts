@@ -11,7 +11,7 @@ export class RemindersController {
   async sendDailyReminders() {
     try {
       return await firstValueFrom(
-        this.client.send('emails-ms.send.daily.reminders', {})
+        this.client.send('get.appointments.for.tomorrow', {})
       );
     } catch (error) {
       throw new RpcException(error);
@@ -20,12 +20,11 @@ export class RemindersController {
 
   @Get('status')
   async getStatus() {
-    try {
-      return await firstValueFrom(
-        this.client.send('emails-ms.reminder.status', {})
-      );
-    } catch (error) {
-      throw new RpcException(error);
-    }
+    return {
+      status: 200,
+      message: 'Sistema de recordatorios movido a reservations-ms',
+      timezone: 'America/Bogota',
+      schedule: '09:00 AM diario'
+    };
   }
 }

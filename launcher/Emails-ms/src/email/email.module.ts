@@ -16,7 +16,7 @@ import { ReminderController } from '../reminder/reminder.controller';
     EmailControllerRegister,
     NotificationsController,
     SupcriptionController,
-    ReminderController, // AGREGAR AQUÍ
+    ReminderController,
   ],
   providers: [EmailService, EmailServiceRegister, SupcritionService],
 })
