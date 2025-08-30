@@ -21,6 +21,8 @@ import Reset_Password from '@/Modules/reset_password/Reset_Password.vue';
 import Confirmation from '@/Modules/confirmation/Confirmation.vue';
 import PanelAdmin from '@/views/panelAdmin/PanelAdmin.vue';
 import Services from '@/views/services/Services.vue';
+import { subscriptionGuard } from './guards/subscriptionGuard';
+
 const route = import.meta.env.BASE_URL || "http://localhost:8080";
 
 const router = createRouter({
@@ -113,7 +115,8 @@ const router = createRouter({
       path: '/paneluser',
       name: 'paneluser',
       component: panel_user_Professional,
-      meta: { requiresAuth: true, requiresPartner: true }
+      meta: { requiresAuth: true, requiresPartner: true, requiresSubscription: true },
+      beforeEnter: subscriptionGuard
     },
     {
       path: '/paneladmin',

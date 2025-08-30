@@ -7,7 +7,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ReservationsModule } from './reservations/reservations.module';
 import { EmailsModule } from './emails/emails.module';
- 
+import { SubscriptionModule } from './subscription/subscription.module';
  
 
 @Module({
@@ -19,7 +19,7 @@ import { EmailsModule } from './emails/emails.module';
     }),
     ReservationsModule,
     EmailsModule,
-
+    SubscriptionModule,
   ],
  
 })

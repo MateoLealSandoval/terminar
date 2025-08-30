@@ -38,3 +38,30 @@ model Favorites {
   userId         String
   user           UserData @relation(fields: [userId], references: [id])
 }
+
+enum PlanType {
+  BASIC
+  STANDARD
+  PREMIUM
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  SUSPENDED
+}
+
+model Subscription {
+  id          String             @id @default(uuid())
+  userId      String             @unique
+  planType    PlanType
+  status      SubscriptionStatus @default(ACTIVE)
+  startDate   DateTime           @default(now())
+  endDate     DateTime
+  amount      Float
+  paymentId   String?            // ID del pago de ePayco
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@map("subscriptions")
+}
