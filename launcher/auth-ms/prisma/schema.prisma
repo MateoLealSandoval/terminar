@@ -65,3 +65,40 @@ model Subscription {
 
   @@map("subscriptions")
 }
+
+enum Role {
+  USER
+  USER_PARTNER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum StatusPendingPartner {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  names     String
+  lastnames String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PendingPartner {
+  id        String                @id @default(uuid())
+  email     String                @unique
+  names     String
+  lastnames String
+  document  String
+  phone     String
+  title     String
+  status    StatusPendingPartner  @default(PENDING)
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+}
