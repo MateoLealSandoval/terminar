@@ -26,7 +26,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
   async registerUser(registerUserDto: any) {
     try {
       const { email, names, password, lastnames } = registerUserDto;
-      const existingUser = await this.user.findUnique({
+      const existingUser = await this.prisma.user.findUnique({
         where: { email }
       });
       if (existingUser) {
@@ -35,7 +35,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
           message: 'El usuario ya existe'
         });
       }
-      const newUser = await this.user.create({
+      const newUser = await this.prisma.user.create({
         data: {
           email,
           password: bcrypt.hashSync(password, 10),
@@ -60,7 +60,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
   async registerPartner(registerPartnerDto: any) {
     try {
       const { email, names, password, lastnames } = registerPartnerDto;
-      const existingUser = await this.user.findUnique({
+      const existingUser = await this.prisma.user.findUnique({
         where: { email }
       });
       if (existingUser) {
@@ -69,7 +69,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
           message: 'El partner ya existe'
         });
       }
-      const newPartner = await this.user.create({
+      const newPartner = await this.prisma.user.create({
         data: {
           email,
           password: bcrypt.hashSync(password, 10),
@@ -94,7 +94,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
   async CreateSuperAdmin(registerUserDto: any) {
     try {
       const { email, names, password, lastnames } = registerUserDto;
-      const existingUser = await this.user.findUnique({
+      const existingUser = await this.prisma.user.findUnique({
         where: { email }
       });
       if (existingUser) {
@@ -103,7 +103,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
           message: 'El super admin ya existe'
         });
       }
-      const newSuperAdmin = await this.user.create({
+      const newSuperAdmin = await this.prisma.user.create({
         data: {
           email,
           password: bcrypt.hashSync(password, 10),
@@ -128,7 +128,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
   async LoginUser(loginUserDto: any) {
     try {
       const { email, password } = loginUserDto;
-      const user = await this.user.findUnique({
+      const user = await this.prisma.user.findUnique({
         where: { email }
       });
       if (!user) {
@@ -168,7 +168,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
 
   async get_data_basic_user(id: string) {
     try {
-      const user = await this.user.findUnique({
+      const user = await this.prisma.user.findUnique({
         where: { id },
         select: {
           id: true,
@@ -198,7 +198,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
 
   async getInformationUsersAdmin(id: string) {
     try {
-      const user = await this.user.findUnique({
+      const user = await this.prisma.user.findUnique({
         where: { id }
       });
       if (!user) {
@@ -227,7 +227,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
       const perPage = Math.max(1, Math.min(100, Number(limit)));
       const offset = (currentPage - 1) * perPage;
       
-      const users = await this.user.findMany({
+      const users = await this.prisma.user.findMany({
         where: { role: Role.USER_PARTNER },
         select: {
           id: true,
@@ -240,7 +240,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
         take: perPage
       });
       
-      const total = await this.user.count({
+      const total = await this.prisma.user.count({
         where: { role: Role.USER_PARTNER }
       });
       
@@ -266,7 +266,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
       const perPage = Math.max(1, Math.min(100, Number(limit)));
       const offset = (currentPage - 1) * perPage;
       
-      const users = await this.user.findMany({
+      const users = await this.prisma.user.findMany({
         where: { role: Role.USER },
         select: {
           id: true,
@@ -279,7 +279,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
         take: perPage
       });
       
-      const total = await this.user.count({
+      const total = await this.prisma.user.count({
         where: { role: Role.USER }
       });
       
@@ -300,7 +300,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
 
   async verifyUserEmail(email: string) {
     try {
-      const user = await this.user.findUnique({
+      const user = await this.prisma.user.findUnique({
         where: { email }
       });
       return { data: !!user };
