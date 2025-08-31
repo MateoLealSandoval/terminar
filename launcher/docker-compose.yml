@@ -7,8 +7,14 @@ services:
     ports:
       - "4222:4222"
       - "8222:8222"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8222/"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
 
-  # PostgreSQL Database - CONFIGURACIÓN CORREGIDA
+  # PostgreSQL Database
   postgresdb:
     container_name: docvisualDb
     image: postgres:latest
@@ -22,13 +28,19 @@ services:
       - POSTGRES_USER=docvisualadmin
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-docvisual123456}
       - POSTGRES_DB=maindb
-    # REMOVIDO: PGOPTIONS con checkpoint_timeout
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docvisualadmin -d maindb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  # Los demás servicios permanecen igual...
+  # Auth Microservice
   auth-ms:
     depends_on:
-      - postgresdb
-      - nats
+      nats:
+        condition: service_healthy
+      postgresdb:
+        condition: service_healthy
     restart: always
     build: ./auth-ms
     volumes:
@@ -40,10 +52,13 @@ services:
       DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD:-docvisual123456}@postgresdb:5432/maindb?schema=auth_shema
       JWT_SECRET: ${JWT_SECRET:-EstoEsUnStringSeguroParaJWT2024}
 
+  # User Microservice
   user-ms:
     depends_on:
-      - postgresdb
-      - nats
+      nats:
+        condition: service_healthy
+      postgresdb:
+        condition: service_healthy
     restart: always
     build: ./user-ms
     volumes:
@@ -54,10 +69,13 @@ services:
       NATS_SERVERS: nats://nats:4222
       DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD:-docvisual123456}@postgresdb:5432/maindb?schema=user_shema
 
+  # Partner Microservice
   partner-ms:
     depends_on:
-      - postgresdb
-      - nats
+      nats:
+        condition: service_healthy
+      postgresdb:
+        condition: service_healthy
     restart: always
     build: ./partner-ms
     volumes:
@@ -68,10 +86,13 @@ services:
       NATS_SERVERS: nats://nats:4222
       DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD:-docvisual123456}@postgresdb:5432/maindb?schema=partner_shema
 
+  # Emails Microservice
   emails-ms:
     depends_on:
-      - postgresdb
-      - nats
+      nats:
+        condition: service_healthy
+      postgresdb:
+        condition: service_healthy
     restart: always
     build: ./Emails-ms
     volumes:
@@ -85,10 +106,13 @@ services:
       EMAIL: ${EMAIL}
       DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD:-docvisual123456}@postgresdb:5432/maindb?schema=email_shema
 
+  # Reservations Microservice
   reservations-ms:
     depends_on:
-      - postgresdb
-      - nats
+      nats:
+        condition: service_healthy
+      postgresdb:
+        condition: service_healthy
     restart: always
     build: ./reservations-ms
     volumes:
@@ -100,10 +124,13 @@ services:
       DATABASE_URL: postgresql://docvisualadmin:${POSTGRES_PASSWORD:-docvisual123456}@postgresdb:5432/maindb?schema=reservations_shema
       JWT_SECRET: ${JWT_SECRET:-EstoEsUnStringSeguroParaJWT2024}
 
+  # Gateway
   gateway:
     depends_on:
-      - postgresdb
-      - nats
+      nats:
+        condition: service_healthy
+      postgresdb:
+        condition: service_healthy
     restart: always
     build: ./gateway
     ports:
@@ -119,6 +146,7 @@ services:
       UPLOAD_PATH: /usr/src/app/uploads
       UPLOAD_PRIVATE_PATH: /usr/src/app/private/uploads
 
+  # Frontend
   frontend:
     restart: always
     build:

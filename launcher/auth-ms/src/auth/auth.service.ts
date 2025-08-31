@@ -11,6 +11,7 @@ import { firstValueFrom } from 'rxjs';
 import { CreateUserPartnerDto } from './dto/CreateUserPartner.dto';
 import { PaginationDto } from './commont/pagination.dto';
 import { auhPathcNameDto } from './dto/authPathNames.dto';
+
 @Injectable()
 export class AuthService extends PrismaClient implements OnModuleInit {
 
@@ -20,16 +21,14 @@ export class AuthService extends PrismaClient implements OnModuleInit {
         super()
     }
 
-
-
     onModuleInit() {
         this.$connect();
-
     }
 
     async singJwt(Payload: JwtPayload) {
         return this.jwtservice.sign(Payload)
     }
+    
     async patchNames(datas: auhPathcNameDto) {
         try {
             const { id, lastnames, names } = datas;
@@ -63,9 +62,12 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 data: editData
             }
         } catch (error) {
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 400,
-                message: error.message
+                message: 'Error actualizando nombres'
             })
         }
     }
@@ -95,29 +97,24 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 }
             });
 
-            // const dataUser = await firstValueFrom(
-            //     this.client.send('User.CreateUserData.User', {
-            //         userId: Newuser.id,
-            //     })
-            // )
-
-
             const { password: __, ...rest } = Newuser;
 
             return {
                 user: rest,
                 token: await this.singJwt(rest),
-                
             };
 
         } catch (error) {
-
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 400,
-                message: error.message
+                message: 'Error en el registro'
             })
         }
     }
+
     async CreateSuperAdmin(RegisterUserDto: RegisterUserDto) {
         try {
             const { email, names, password, lastnames } = RegisterUserDto;
@@ -153,7 +150,6 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 }
             });
 
-
             const { password: __, ...rest } = Newuser;
             return {
                 user: rest,
@@ -162,17 +158,15 @@ export class AuthService extends PrismaClient implements OnModuleInit {
             };
 
         } catch (error) {
-
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 400,
-                message: error.message
+                message: 'Error creando super admin'
             })
         }
     }
-
-
-
-
 
     async resetPassword(email: string, password: string) {
         try {
@@ -187,7 +181,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                     message: 'El usuario no existe'
                 })
             }
-            const hashedPassword = await bcrypt.hash(password, 10); // Mejor usar await
+            const hashedPassword = await bcrypt.hash(password, 10);
             await this.user.update({
                 where: {
                     email: email
@@ -201,106 +195,145 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 data: 'Contraseña actualizada correctamente',
             }
         } catch (error) {
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 400,
-                message: error.message
+                message: 'Error actualizando contraseña'
             })
         }
     }
-
 
     async registerPartner(RegisterUserDto: RegisterPartnerDto) {
-        const { email, names, password, lastnames, document, phone, title } = RegisterUserDto;
-        const user = await this.user.findUnique({
-            where: {
-                email: email
-            }
-        });
-        if (user) {
-            throw new RpcException({
-                status: 400,
-                message: 'El usuario existe'
-
-            })
-
-        }
-        const Newuser = await this.user.create({
-            data: {
-                email: email,
-                password: bcrypt.hashSync(password, 10),
-                names: names,
-                lastnames: lastnames,
-                role: 'USER_PARTNER'
-            }
-        });
-        const { password: __, ...rest } = Newuser;
-        const dataNewPartner: CreateUserPartnerDto = {
-            id: Newuser.id,
-            document: document,
-            phone: phone,
-            title: title
-        }
-        const dataUser = await firstValueFrom(
-            this.client.send('update.partner.partner', {
-                id: dataNewPartner.id,
-                document: document,
-                phone: phone,
-                title: dataNewPartner.title,
-                name: names
-            })
-        )
-
-        return {
-            user: rest,
-            token: await this.singJwt(rest),
-            dataUser: dataUser
-        };
-
-    }
-
-
-    async LoginUser(LoginUserDto: LoginUserDto) {
         try {
-            const { email, password } = LoginUserDto;
+            const { email, names, password, lastnames, document, phone, title } = RegisterUserDto;
             const user = await this.user.findUnique({
                 where: {
                     email: email
                 }
             });
-            if (!user) {
+            if (user) {
                 throw new RpcException({
                     status: 400,
-                    message: 'Usuario o contrasena no valida'
+                    message: 'El usuario existe'
                 })
             }
-            if (user.role === 'DELETED_USER' || user.role === 'DELETED_USER_PARTNER') {
-                throw new RpcException({
-                    status: 400,
-                    message: 'EL usuario fue borrado'
-                })
+            const Newuser = await this.user.create({
+                data: {
+                    email: email,
+                    password: bcrypt.hashSync(password, 10),
+                    names: names,
+                    lastnames: lastnames,
+                    role: 'USER_PARTNER'
+                }
+            });
+            const { password: __, ...rest } = Newuser;
+            const dataNewPartner: CreateUserPartnerDto = {
+                id: Newuser.id,
+                document: document,
+                phone: phone,
+                title: title
             }
-            const isPasswordValid = bcrypt.compareSync(password, user.password)
-            if (!isPasswordValid) {
-                throw new RpcException({
-                    status: 400,
-                    message: 'Correo o contraseña inválidos'
+            const dataUser = await firstValueFrom(
+                this.client.send('update.partner.partner', {
+                    id: dataNewPartner.id,
+                    document: document,
+                    phone: phone,
+                    title: dataNewPartner.title,
+                    name: names
                 })
-            }
-            const { password: __, ...rest } = user;
+            )
 
             return {
                 user: rest,
-                token: await this.singJwt(rest)
+                token: await this.singJwt(rest),
+                dataUser: dataUser
             };
 
         } catch (error) {
-
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 400,
-                message: error.message
+                message: 'Error registrando partner'
             })
         }
     }
+
+    async LoginUser(LoginUserDto: LoginUserDto) {
+    console.log('🚀 LoginUser called with:', LoginUserDto);
+    
+    try {
+        const { email, password } = LoginUserDto;
+        
+        console.log('📧 Searching for user with email:', email);
+        const user = await this.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+        
+        if (!user) {
+            console.log('❌ User not found for email:', email);
+            throw new RpcException({
+                status: 400,
+                message: 'Usuario o contrasena no valida'
+            });
+        }
+        
+        console.log('✅ User found:', user.id, user.email, user.role);
+        
+        if (user.role === 'DELETED_USER' || user.role === 'DELETED_USER_PARTNER') {
+            console.log('❌ User is deleted:', user.role);
+            throw new RpcException({
+                status: 400,
+                message: 'EL usuario fue borrado'
+            });
+        }
+        
+        console.log('🔑 Validating password...');
+        const isPasswordValid = bcrypt.compareSync(password, user.password);
+        
+        if (!isPasswordValid) {
+            console.log('❌ Invalid password for user:', email);
+            throw new RpcException({
+                status: 400,
+                message: 'Correo o contraseña inválidos'
+            });
+        }
+        
+        console.log('✅ Password valid, generating JWT...');
+        const { password: __, ...rest } = user;
+
+        const token = await this.singJwt(rest);
+        console.log('✅ JWT generated successfully');
+
+        const result = {
+            user: rest,
+            token: token
+        };
+        
+        console.log('✅ Login successful for:', email);
+        return result;
+
+    } catch (error) {
+        console.error('💥 LoginUser Error:', error);
+        
+        if (error instanceof RpcException) {
+            console.log('📤 Rethrowing RpcException:', error.getError());
+            throw error;
+        }
+        
+        console.error('💥 Unexpected error in LoginUser:', error.message, error.stack);
+        throw new RpcException({
+            status: 500,
+            message: 'Error interno en el login'
+        });
+    }
+}
+
     async verifyToken(token: string) {
         try {
             const { sub, iat, exp, ...user } = this.jwtservice.verify(token, {
@@ -317,6 +350,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
             })
         }
     }
+
     async refreshtoken(token:string){
          try {
             const { sub, iat, exp, ...user } = this.jwtservice.verify(token, {
@@ -338,6 +372,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
             })
         }
     }
+
     async verifyUserEmail(email: string) {
         try {
             const user = await this.user.findUnique({
@@ -366,6 +401,7 @@ export class AuthService extends PrismaClient implements OnModuleInit {
             });
         }
     }
+
     async get_data_basic_user(id: string) {
         try {
             const user = await this.user.findFirst({
@@ -387,6 +423,9 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 data: user
             }
         } catch (error) {
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 500,
                 message: 'Error interno al obtener el usuario',
@@ -394,13 +433,6 @@ export class AuthService extends PrismaClient implements OnModuleInit {
         }
     }
 
-
-
-
-
-    /**
-     * todo services admin
-     */
     async getInformationUsersAdmin(id: string) {
         try {
             const user = await this.user.findFirst({
@@ -461,7 +493,6 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 }
             });
 
-
             return {
                 status: 200,
                 data: {
@@ -475,8 +506,10 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 }
             }
 
-
         } catch (error) {
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 500,
                 message: 'Error interno al obtener el usuario',
@@ -522,15 +555,18 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 data: 'Usuario eliminado correctamente'
             }
         } catch (error) {
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 500,
                 message: 'Error interno al eliminar el usuario',
             });
         }
     }
+
     async getAllUsersPartners(PaginationDto: PaginationDto) {
         try {
-
             const { page, limit } = PaginationDto;
             const currentPage = page ?? 1;
             const perPage = limit ?? 10;
@@ -578,7 +614,6 @@ export class AuthService extends PrismaClient implements OnModuleInit {
 
     async getAllUsers(PaginationDto: PaginationDto) {
         try {
-
             const { page, limit } = PaginationDto;
             const currentPage = page ?? 1;
             const perPage = limit ?? 10;
@@ -662,13 +697,15 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 data: 'Estado del profesional actualizado correctamente'
             }
         } catch (error) {
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 500,
                 message: 'Error al establecer el estado del professional',
             });
         }
     }
-
 
     async setStatusUser(setStatusUserDto: setStatusUserDto) {
         try {
@@ -702,6 +739,9 @@ export class AuthService extends PrismaClient implements OnModuleInit {
                 data: 'Estado del usuario actualizado correctamente'
             }
         } catch (error) {
+            if (error instanceof RpcException) {
+                throw error;
+            }
             throw new RpcException({
                 status: 500,
                 message: 'Error al establecer el estado del usuario',
